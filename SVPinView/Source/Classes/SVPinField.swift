@@ -9,6 +9,12 @@
 import UIKit
 
 class SVPinField: UITextField {
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupUi()
+    }
+    
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(UIResponderStandardEditActions.copy(_:)) ||
             action == #selector(UIResponderStandardEditActions.cut(_:)) ||
@@ -34,5 +40,14 @@ class SVPinField: UITextField {
                 nextResponder.becomeFirstResponder()
             }
         }
+    }
+    
+    override func shouldChangeText(in range: UITextRange, replacementText text: String) -> Bool {
+        return text.rangeOfCharacter(from: NSCharacterSet.alphanumerics) != nil
+    }
+    
+    
+    fileprivate func setupUi() {
+        autocapitalizationType = .allCharacters
     }
 }
