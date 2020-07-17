@@ -13,6 +13,7 @@ class SVPinField: UITextField {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUi()
+        self.delegate = self
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -51,3 +52,11 @@ class SVPinField: UITextField {
         autocapitalizationType = .allCharacters
     }
 }
+
+extension SVPinField : UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let set = NSCharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZ0123456789").inverted
+        return string.rangeOfCharacter(from: set) == nil
+    }
+}
+
